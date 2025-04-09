@@ -1,0 +1,357 @@
+[gd_scene load_steps=11 format=3 uid="uid://dpup5exubfs6b"]
+
+[ext_resource type="Script" uid="uid://0oj4td5mmn1c" path="res://ui/main_panel.gd" id="1_3tv7d"]
+[ext_resource type="Script" uid="uid://cehyn8t86ekay" path="res://palette/palette.gd" id="2_hbvmh"]
+[ext_resource type="Script" uid="uid://v50chr7rdgqp" path="res://palette/gradient_texture_atlas.gd" id="3_qg3oi"]
+[ext_resource type="Texture2D" uid="uid://cscyw6c6r0tac" path="res://ui/icons/gear.png" id="4_k73qj"]
+[ext_resource type="Texture2D" uid="uid://dto15hwhklavq" path="res://ui/icons/checkmark.png" id="4_umdju"]
+[ext_resource type="Texture2D" uid="uid://4it6aymwxexm" path="res://ui/icons/save.png" id="5_k73qj"]
+[ext_resource type="Texture2D" uid="uid://bg4dswdot1vy0" path="res://ui/icons/tablet.png" id="7_0d81f"]
+[ext_resource type="Texture2D" uid="uid://ct27fbupq7fb8" path="res://ui/icons/zoom.png" id="7_2vneh"]
+
+[sub_resource type="Resource" id="Resource_umdju"]
+script = ExtResource("2_hbvmh")
+_colors = Array[Color]([Color(1, 1, 1, 1)])
+
+[sub_resource type="Resource" id="Resource_k73qj"]
+script = ExtResource("3_qg3oi")
+layout = Vector2i(4, 2)
+region_size = Vector2i(1, 32)
+gradient_colors = 8
+palette = SubResource("Resource_umdju")
+background_color = Color(0, 0, 0, 1)
+
+[node name="MainPanel" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3tv7d")
+atlas = SubResource("Resource_k73qj")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer"]
+layout_mode = 2
+collapsed = true
+
+[node name="SettingsPanel" type="MarginContainer" parent="MarginContainer/HSplitContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer/HSplitContainer/SettingsPanel"]
+layout_mode = 2
+
+[node name="TitleContainer" type="HBoxContainer" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/TitleContainer"]
+layout_mode = 2
+texture = ExtResource("4_k73qj")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/TitleContainer"]
+layout_mode = 2
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 6
+columns = 2
+
+[node name="LayoutLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "Atlas Layout"
+horizontal_alignment = 2
+
+[node name="LayoutGridContainer" type="GridContainer" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+columns = 3
+
+[node name="ColumnsLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer"]
+layout_mode = 2
+text = "Columns"
+horizontal_alignment = 1
+
+[node name="EmptyLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer"]
+layout_mode = 2
+
+[node name="RowsLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer"]
+layout_mode = 2
+text = "Rows"
+horizontal_alignment = 1
+
+[node name="ColumnsSpinBox" type="SpinBox" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 256.0
+value = 4.0
+rounded = true
+alignment = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer"]
+layout_mode = 2
+text = "x"
+
+[node name="RowsSpinBox" type="SpinBox" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 256.0
+value = 2.0
+rounded = true
+alignment = 2
+
+[node name="AtlasRegionSizeLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "Atlas region size"
+horizontal_alignment = 2
+
+[node name="RegionGridContainer" type="GridContainer" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+columns = 3
+
+[node name="RegionWidthLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer"]
+layout_mode = 2
+text = "Width"
+horizontal_alignment = 1
+
+[node name="EmptyLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer"]
+layout_mode = 2
+
+[node name="RegionHeightLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer"]
+layout_mode = 2
+text = "Height"
+horizontal_alignment = 1
+
+[node name="RegionWidthSpinBox" type="SpinBox" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 256.0
+value = 1.0
+rounded = true
+suffix = "px"
+
+[node name="Label" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer"]
+layout_mode = 2
+text = "x"
+
+[node name="RegionHeightSpinBox" type="SpinBox" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 256.0
+value = 32.0
+rounded = true
+suffix = "px"
+
+[node name="BackgroundColorLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "Background color"
+
+[node name="BackgroundColorPickerButton" type="ColorPickerButton" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="GradientDensityLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "Gradient density"
+
+[node name="GradientDensitySpinBox" type="SpinBox" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+min_value = 1.0
+max_value = 256.0
+value = 8.0
+rounded = true
+alignment = 2
+
+[node name="PresetLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "Palette Preset"
+horizontal_alignment = 2
+
+[node name="PresetOptionButton" type="OptionButton" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+selected = 0
+item_count = 4
+popup/item_0/id = 0
+popup/item_1/text = "Extended"
+popup/item_1/id = 1
+popup/item_2/text = "Pastel"
+popup/item_2/id = 2
+popup/item_3/text = "Noir"
+popup/item_3/id = 3
+
+[node name="ColorsCountLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+text = "Base colors count"
+
+[node name="ColorsCountSpinBox" type="SpinBox" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+max_value = 256.0
+value = 1.0
+rounded = true
+alignment = 2
+
+[node name="ColorsLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Colors"
+horizontal_alignment = 2
+
+[node name="ColorsContainer" type="VBoxContainer" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer"]
+layout_mode = 2
+
+[node name="FileDialog" type="FileDialog" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+dialog_hide_on_ok = true
+access = 2
+filters = PackedStringArray("*.png")
+use_native_dialog = true
+
+[node name="UpdateButton" type="Button" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Update"
+icon = ExtResource("4_umdju")
+
+[node name="SaveButton" type="Button" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save"
+icon = ExtResource("5_k73qj")
+
+[node name="PreviewPanel" type="MarginContainer" parent="MarginContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HSplitContainer/PreviewPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TitleContainer" type="HBoxContainer" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/TitleContainer"]
+layout_mode = 2
+texture = ExtResource("7_0d81f")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/TitleContainer"]
+layout_mode = 2
+text = "Palette Preview"
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/PanelContainer/ScrollContainer"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+stretch_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Texture size"
+
+[node name="TextureSizeEdit" type="LineEdit" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "(0, 0)"
+editable = false
+context_menu_enabled = false
+selecting_enabled = false
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("7_2vneh")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Zoom"
+
+[node name="ZoomSlider" type="HSlider" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 1
+min_value = 1.0
+max_value = 8.0
+step = 0.5
+value = 1.0
+tick_count = 7
+
+[node name="ZoomValueLabel" type="Label" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1.0"
+
+[connection signal="value_changed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer/ColumnsSpinBox" to="." method="_on_columns_spin_box_value_changed"]
+[connection signal="value_changed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer/RowsSpinBox" to="." method="_on_rows_spin_box_value_changed"]
+[connection signal="value_changed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer/RegionWidthSpinBox" to="." method="_on_region_width_spin_box_value_changed"]
+[connection signal="value_changed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer/RegionHeightSpinBox" to="." method="_on_region_height_spin_box_value_changed"]
+[connection signal="color_changed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/BackgroundColorPickerButton" to="." method="_on_background_color_picker_button_color_changed"]
+[connection signal="value_changed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/GradientDensitySpinBox" to="." method="_on_gradient_density_spin_box_value_changed"]
+[connection signal="item_selected" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/PresetOptionButton" to="." method="_on_preset_option_button_item_selected"]
+[connection signal="value_changed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/ColorsCountSpinBox" to="." method="_on_colors_count_spin_box_value_changed"]
+[connection signal="canceled" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/HBoxContainer/FileDialog" to="." method="_on_file_dialog_canceled"]
+[connection signal="file_selected" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/HBoxContainer/FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/HBoxContainer/UpdateButton" to="." method="_on_update_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="value_changed" from="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer/HBoxContainer2/ZoomSlider" to="." method="_on_zoom_slider_value_changed"]
