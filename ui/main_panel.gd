@@ -33,20 +33,28 @@ static var PRESET_OPTIONS: Dictionary[String, Palette] = {
 @onready var region_width_spin_box: SpinBox = %RegionWidthSpinBox
 @onready var region_height_spin_box: SpinBox = %RegionHeightSpinBox
 
-@onready var background_color_picker_button: ColorPickerButton = %BackgroundColorPickerButton
-@onready var gradient_density_spin_box: SpinBox = %GradientDensitySpinBox
-
-@onready var colors_count_spin_box: SpinBox = %ColorsCountSpinBox
+@onready var gradient_mode_option_button: OptionButton = %GradientModeOptionButton
+@onready var gradient_factor_spin_box: SpinBox = %GradientFactorSpinBox
+@onready var gradient_quants_spin_box: SpinBox = %GradientQuantsSpinBox
 
 @onready var preset_option_button: OptionButton = %PresetOptionButton
+@onready var background_color_picker_button: ColorPickerButton = %BackgroundColorPickerButton
+@onready var colors_count_spin_box: SpinBox = %ColorsCountSpinBox
+
 @onready var colors_container: VBoxContainer = %ColorsContainer
-@onready var zoom_value_label: Label = %ZoomValueLabel
 
 @onready var texture_size_edit: LineEdit = %TextureSizeEdit
 @onready var texture_rect: TextureRect = %TextureRect
 
 @onready var zoom_slider: HSlider = %ZoomSlider
+@onready var zoom_value_label: Label = %ZoomValueLabel
+
 @onready var file_dialog: FileDialog = %FileDialog
+
+@onready var popup_panel: PopupPanel = %PopupPanel
+
+@onready var about_text: TextEdit = %AboutText
+@onready var license_text: TextEdit = %LicenseText
 #endregion
 
 #region Variables
@@ -54,21 +62,34 @@ static var PRESET_OPTIONS: Dictionary[String, Palette] = {
 
 #region Private methods
 func _ready() -> void:
+	_add_gradient_mode_options()
+	_add_preset_options()
+
+	about_text.text = ProjectSettings.get_setting("application/config/description")
+	license_text.text = Engine.get_license_text()
+
 	columns_spin_box.value = atlas.layout.x
 	rows_spin_box.value = atlas.layout.y
 
 	region_width_spin_box.value = atlas.region_size.x
 	region_height_spin_box.value = atlas.region_size.y
 
+	gradient_mode_option_button.selected = atlas.gradient_mode
+	gradient_factor_spin_box.value = atlas.gradient_factor
+	gradient_quants_spin_box.value = atlas.gradient_quants
+
 	background_color_picker_button.color = atlas.background_color
-	gradient_density_spin_box.value = atlas.gradient_colors
-	
-	texture_size_edit.text = '%.0v' % atlas.get_texture_size()
+
+	_update_texture_size()
 
 	if atlas.palette != null:
 		_update_colors_area(atlas.palette.size())
-		colors_count_spin_box.value = int(atlas.palette.size())
-	_add_preset_options()
+		gradient_quants_spin_box.value = int(atlas.palette.size())
+
+func _add_gradient_mode_options() -> void:
+	gradient_mode_option_button.clear()
+	for mode in GradientTextureAtlas.GradientMode.keys():
+		gradient_mode_option_button.add_item(mode)
 
 func _add_preset_options() -> void:
 	preset_option_button.clear()
@@ -95,6 +116,7 @@ func _update_colors_area(count: int) -> void:
 
 func _update_texture() -> void:
 	if atlas != null:
+		atlas.generate()
 		texture_rect.texture = atlas.get_texture()
 		texture_rect.scale.x = zoom_slider.value
 		texture_rect.scale.y = zoom_slider.value
@@ -102,6 +124,9 @@ func _update_texture() -> void:
 func _save_texture(path: String) -> void:
 	Logger.info('%s' % path)
 	atlas.get_image().save_png(path)
+
+func _update_texture_size() -> void:
+	texture_size_edit.text = '%.0v' % atlas.get_texture_size()
 #endregion
 
 #region Public methods
@@ -110,25 +135,32 @@ func _save_texture(path: String) -> void:
 #region Signal handlers
 func _on_columns_spin_box_value_changed(value: float) -> void:
 	atlas.layout.x = int(value)
-	texture_size_edit.text = '%.0v' % atlas.get_texture_size()
+	_update_texture_size()
 
 func _on_rows_spin_box_value_changed(value: float) -> void:
 	atlas.layout.y = int(value)
-	texture_size_edit.text = '%.0v' % atlas.get_texture_size()
+	_update_texture_size()
 
 func _on_region_width_spin_box_value_changed(value: float) -> void:
 	atlas.region_size.x = int(value)
-	texture_size_edit.text = '%.0v' % atlas.get_texture_size()
+	_update_texture_size()
 
 func _on_region_height_spin_box_value_changed(value: float) -> void:
 	atlas.region_size.y = int(value)
-	texture_size_edit.text = '%.0v' % atlas.get_texture_size()
+	_update_texture_size()
 
 func _on_background_color_picker_button_color_changed(color: Color) -> void:
 	atlas.background_color = color
 
-func _on_gradient_density_spin_box_value_changed(value: float) -> void:
-	atlas.gradient_colors = int(value)
+func _on_gradient_mode_option_button_item_selected(index: int) -> void:
+	var mode: GradientTextureAtlas.GradientMode = index as GradientTextureAtlas.GradientMode
+	atlas.gradient_mode = mode
+
+func _on_gradient_quants_spin_box_value_changed(value: float) -> void:
+	atlas.gradient_quants = int(value)
+
+func _on_gradient_factor_spin_box_value_changed(value: float) -> void:
+	atlas.gradient_factor = value
 
 func _on_colors_count_spin_box_value_changed(value: float) -> void:
 	_update_colors_area(int(value))
@@ -149,9 +181,16 @@ func _on_update_button_pressed() -> void:
 func _on_save_button_pressed() -> void:
 	file_dialog.show()
 
-func _on_file_dialog_canceled() -> void:
-	pass
-
 func _on_file_dialog_file_selected(path: String) -> void:
 	_save_texture(path)
+
+func _on_popup_menu_index_pressed(index: int) -> void:
+	match index:
+		0:
+			popup_panel.show()
+		1: 
+			get_tree().quit()
+
+func _on_license_close_button_pressed() -> void:
+	popup_panel.hide()
 #endregion

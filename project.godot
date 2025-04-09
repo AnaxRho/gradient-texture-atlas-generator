@@ -11,9 +11,10 @@ config_version=5
 [application]
 
 config/name="gradient-texture-atlas-generator"
+config/description="Application for gradient texture atlas images generation."
 run/main_scene="uid://dpup5exubfs6b"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://cstxgr0uwm037"
 
 [autoload]
 

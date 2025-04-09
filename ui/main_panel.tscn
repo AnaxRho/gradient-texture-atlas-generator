@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://dpup5exubfs6b"]
+[gd_scene load_steps=14 format=3 uid="uid://dpup5exubfs6b"]
 
 [ext_resource type="Script" uid="uid://0oj4td5mmn1c" path="res://ui/main_panel.gd" id="1_3tv7d"]
 [ext_resource type="Script" uid="uid://cehyn8t86ekay" path="res://palette/palette.gd" id="2_hbvmh"]
 [ext_resource type="Script" uid="uid://v50chr7rdgqp" path="res://palette/gradient_texture_atlas.gd" id="3_qg3oi"]
+[ext_resource type="Texture2D" uid="uid://g7uymto0lb4w" path="res://ui/icons/door.png" id="4_614tt"]
+[ext_resource type="Texture2D" uid="uid://bw584rf0v381q" path="res://ui/icons/information.png" id="4_go3ok"]
 [ext_resource type="Texture2D" uid="uid://cscyw6c6r0tac" path="res://ui/icons/gear.png" id="4_k73qj"]
 [ext_resource type="Texture2D" uid="uid://dto15hwhklavq" path="res://ui/icons/checkmark.png" id="4_umdju"]
 [ext_resource type="Texture2D" uid="uid://4it6aymwxexm" path="res://ui/icons/save.png" id="5_k73qj"]
@@ -17,9 +19,13 @@ _colors = Array[Color]([Color(1, 1, 1, 1)])
 script = ExtResource("3_qg3oi")
 layout = Vector2i(4, 2)
 region_size = Vector2i(1, 32)
-gradient_colors = 8
+gradient_mode = 0
+gradient_quants = 8
+gradient_factor = 0.5
 palette = SubResource("Resource_umdju")
 background_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_go3ok"]
 
 [node name="MainPanel" type="PanelContainer"]
 anchors_preset = 15
@@ -30,45 +36,249 @@ grow_vertical = 2
 script = ExtResource("1_3tv7d")
 atlas = SubResource("Resource_k73qj")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+theme_override_constants/separation = 0
 
-[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer"]
+[node name="MenuContainer" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
-collapsed = true
 
-[node name="SettingsPanel" type="MarginContainer" parent="MarginContainer/HSplitContainer"]
+[node name="MenuBar" type="MenuBar" parent="VBoxContainer/MenuContainer"]
+layout_mode = 2
+
+[node name="PopupMenu" type="PopupMenu" parent="VBoxContainer/MenuContainer/MenuBar"]
+title = "Menu"
+item_count = 2
+item_0/text = "About"
+item_0/icon = ExtResource("4_go3ok")
+item_0/id = 1
+item_1/text = "Exit"
+item_1/icon = ExtResource("4_614tt")
+item_1/id = 0
+
+[node name="PopupPanel" type="PopupPanel" parent="VBoxContainer/MenuContainer/MenuBar"]
+unique_name_in_owner = true
+transparent_bg = false
+title = "About"
+initial_position = 2
+size = Vector2i(800, 450)
+borderless = false
+transparent = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MenuContainer/MenuBar/PopupPanel"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 796.0
+offset_bottom = 446.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AppTitleLabel" type="Label" parent="VBoxContainer/MenuContainer/MenuBar/PopupPanel/VBoxContainer"]
+layout_mode = 2
+text = "Gradient Texture Atlas Generator"
+horizontal_alignment = 1
+
+[node name="ScrollContainer1" type="ScrollContainer" parent="VBoxContainer/MenuContainer/MenuBar/PopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AboutText" type="TextEdit" parent="VBoxContainer/MenuContainer/MenuBar/PopupPanel/VBoxContainer/ScrollContainer1"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+editable = false
+
+[node name="MadeWithGodotLabel" type="Label" parent="VBoxContainer/MenuContainer/MenuBar/PopupPanel/VBoxContainer"]
+layout_mode = 2
+text = "Made with Godot"
+horizontal_alignment = 1
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="VBoxContainer/MenuContainer/MenuBar/PopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LicenseText" type="TextEdit" parent="VBoxContainer/MenuContainer/MenuBar/PopupPanel/VBoxContainer/ScrollContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+editable = false
+
+[node name="LicenseCloseButton" type="Button" parent="VBoxContainer/MenuContainer/MenuBar/PopupPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Close"
+
+[node name="MainPanelContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MainPanelContainer"]
+layout_mode = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SettingsPanel" type="PanelContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 size_flags_horizontal = 0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
-[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer/HSplitContainer/SettingsPanel"]
+[node name="HBoxContainer" type="VBoxContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer"]
 layout_mode = 2
 
-[node name="TitleContainer" type="HBoxContainer" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer"]
+[node name="TitleContainer" type="HBoxContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/TitleContainer"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/TitleContainer"]
 layout_mode = 2
 texture = ExtResource("4_k73qj")
 expand_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/TitleContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/TitleContainer"]
 layout_mode = 2
 text = "Settings"
 horizontal_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LayoutLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Atlas Layout"
+horizontal_alignment = 1
+
+[node name="LayoutGridContainer" type="GridContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="LayoutLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer"]
+layout_mode = 2
+text = "Layout"
+horizontal_alignment = 2
+
+[node name="LayoutGridContainer" type="GridContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 3
+
+[node name="ColumnsLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/LayoutGridContainer"]
+layout_mode = 2
+text = "Columns"
+horizontal_alignment = 1
+
+[node name="EmptyLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/LayoutGridContainer"]
+layout_mode = 2
+
+[node name="RowsLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/LayoutGridContainer"]
+layout_mode = 2
+text = "Rows"
+horizontal_alignment = 1
+
+[node name="ColumnsSpinBox" type="SpinBox" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/LayoutGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 256.0
+value = 4.0
+rounded = true
+alignment = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/LayoutGridContainer"]
+layout_mode = 2
+text = "x"
+
+[node name="RowsSpinBox" type="SpinBox" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/LayoutGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 256.0
+value = 2.0
+rounded = true
+alignment = 2
+
+[node name="AtlasRegionSizeLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer"]
+layout_mode = 2
+text = "Region size"
+horizontal_alignment = 2
+
+[node name="RegionGridContainer" type="GridContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 3
+
+[node name="RegionWidthLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/RegionGridContainer"]
+layout_mode = 2
+text = "Width"
+horizontal_alignment = 1
+
+[node name="EmptyLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/RegionGridContainer"]
+layout_mode = 2
+
+[node name="RegionHeightLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/RegionGridContainer"]
+layout_mode = 2
+text = "Height"
+horizontal_alignment = 1
+
+[node name="RegionWidthSpinBox" type="SpinBox" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/RegionGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 256.0
+value = 1.0
+rounded = true
+alignment = 2
+suffix = "px"
+
+[node name="Label" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/RegionGridContainer"]
+layout_mode = 2
+text = "x"
+
+[node name="RegionHeightSpinBox" type="SpinBox" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/RegionGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 256.0
+value = 32.0
+rounded = true
+alignment = 2
+suffix = "px"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxEmpty_go3ok")
+
+[node name="GradientLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Gradient"
+horizontal_alignment = 1
+
+[node name="GradientGridContainer" type="GridContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -76,111 +286,33 @@ theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 6
 columns = 2
 
-[node name="LayoutLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+[node name="GradientModeLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/GradientGridContainer"]
 layout_mode = 2
-text = "Atlas Layout"
-horizontal_alignment = 2
+text = "Mode"
 
-[node name="LayoutGridContainer" type="GridContainer" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-columns = 3
-
-[node name="ColumnsLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer"]
-layout_mode = 2
-text = "Columns"
-horizontal_alignment = 1
-
-[node name="EmptyLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer"]
-layout_mode = 2
-
-[node name="RowsLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer"]
-layout_mode = 2
-text = "Rows"
-horizontal_alignment = 1
-
-[node name="ColumnsSpinBox" type="SpinBox" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer"]
+[node name="GradientModeOptionButton" type="OptionButton" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/GradientGridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-min_value = 1.0
-max_value = 256.0
-value = 4.0
-rounded = true
+size_flags_horizontal = 0
+
+[node name="GradientFactorLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/GradientGridContainer"]
+layout_mode = 2
+text = "Factor"
+
+[node name="GradientFactorSpinBox" type="SpinBox" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/GradientGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+max_value = 10.0
+step = 0.1
+value = 0.5
 alignment = 2
 
-[node name="Label" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer"]
+[node name="GradientQuantsLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/GradientGridContainer"]
 layout_mode = 2
-text = "x"
+text = "Quants"
 
-[node name="RowsSpinBox" type="SpinBox" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-min_value = 1.0
-max_value = 256.0
-value = 2.0
-rounded = true
-alignment = 2
-
-[node name="AtlasRegionSizeLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
-layout_mode = 2
-text = "Atlas region size"
-horizontal_alignment = 2
-
-[node name="RegionGridContainer" type="GridContainer" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-columns = 3
-
-[node name="RegionWidthLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer"]
-layout_mode = 2
-text = "Width"
-horizontal_alignment = 1
-
-[node name="EmptyLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer"]
-layout_mode = 2
-
-[node name="RegionHeightLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer"]
-layout_mode = 2
-text = "Height"
-horizontal_alignment = 1
-
-[node name="RegionWidthSpinBox" type="SpinBox" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-min_value = 1.0
-max_value = 256.0
-value = 1.0
-rounded = true
-suffix = "px"
-
-[node name="Label" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer"]
-layout_mode = 2
-text = "x"
-
-[node name="RegionHeightSpinBox" type="SpinBox" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-min_value = 1.0
-max_value = 256.0
-value = 32.0
-rounded = true
-suffix = "px"
-
-[node name="BackgroundColorLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
-layout_mode = 2
-text = "Background color"
-
-[node name="BackgroundColorPickerButton" type="ColorPickerButton" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="GradientDensityLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
-layout_mode = 2
-text = "Gradient density"
-
-[node name="GradientDensitySpinBox" type="SpinBox" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+[node name="GradientQuantsSpinBox" type="SpinBox" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/GradientGridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
@@ -190,12 +322,36 @@ value = 8.0
 rounded = true
 alignment = 2
 
-[node name="PresetLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+theme_override_styles/separator = SubResource("StyleBoxEmpty_go3ok")
+
+[node name="ColorsLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Colors"
+horizontal_alignment = 1
+
+[node name="ColorsGridContainer" type="GridContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="BackgroundColorLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/ColorsGridContainer"]
+layout_mode = 2
+text = "Background color"
+
+[node name="BackgroundColorPickerButton" type="ColorPickerButton" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/ColorsGridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="PresetLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/ColorsGridContainer"]
 layout_mode = 2
 text = "Palette Preset"
 horizontal_alignment = 2
 
-[node name="PresetOptionButton" type="OptionButton" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+[node name="PresetOptionButton" type="OptionButton" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/ColorsGridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -210,11 +366,11 @@ popup/item_2/id = 2
 popup/item_3/text = "Noir"
 popup/item_3/id = 3
 
-[node name="ColorsCountLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+[node name="ColorsCountLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/ColorsGridContainer"]
 layout_mode = 2
 text = "Base colors count"
 
-[node name="ColorsCountSpinBox" type="SpinBox" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+[node name="ColorsCountSpinBox" type="SpinBox" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/ColorsGridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
@@ -223,110 +379,117 @@ value = 1.0
 rounded = true
 alignment = 2
 
-[node name="ColorsLabel" type="Label" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+[node name="ColorsLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/ColorsGridContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Colors"
 horizontal_alignment = 2
 
-[node name="ColorsContainer" type="VBoxContainer" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer"]
+[node name="ColorsContainer" type="VBoxContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/ColorsGridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="FileDialog" type="FileDialog" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/HBoxContainer"]
+[node name="FileDialog" type="FileDialog" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 dialog_hide_on_ok = true
 access = 2
 filters = PackedStringArray("*.png")
 use_native_dialog = true
 
-[node name="UpdateButton" type="Button" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/HBoxContainer"]
+[node name="UpdateButton" type="Button" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Update"
 icon = ExtResource("4_umdju")
 
-[node name="SaveButton" type="Button" parent="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/HBoxContainer"]
+[node name="SaveButton" type="Button" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Save"
 icon = ExtResource("5_k73qj")
 
-[node name="PreviewPanel" type="MarginContainer" parent="MarginContainer/HSplitContainer"]
+[node name="PreviewPanel" type="PanelContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HSplitContainer/PreviewPanel"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="TitleContainer" type="HBoxContainer" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer"]
+[node name="TitleContainer" type="HBoxContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/TitleContainer"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer/TitleContainer"]
 layout_mode = 2
 texture = ExtResource("7_0d81f")
 expand_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/TitleContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer/TitleContainer"]
 layout_mode = 2
 text = "Palette Preview"
 horizontal_alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/PanelContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/PanelContainer/ScrollContainer"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer/PanelContainer/ScrollContainer"]
 unique_name_in_owner = true
 texture_filter = 1
 layout_mode = 2
 stretch_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Texture size"
 
-[node name="TextureSizeEdit" type="LineEdit" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="TextureSizeEdit" type="LineEdit" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-text = "(0, 0)"
+text = "(4, 64)"
 editable = false
 context_menu_enabled = false
 selecting_enabled = false
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer/HBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
 layout_mode = 2
 texture = ExtResource("7_2vneh")
 expand_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Zoom"
 
-[node name="ZoomSlider" type="HSlider" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer/HBoxContainer2"]
+[node name="ZoomSlider" type="HSlider" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -337,21 +500,25 @@ step = 0.5
 value = 1.0
 tick_count = 7
 
-[node name="ZoomValueLabel" type="Label" parent="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer/HBoxContainer2"]
+[node name="ZoomValueLabel" type="Label" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "1.0"
 
-[connection signal="value_changed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer/ColumnsSpinBox" to="." method="_on_columns_spin_box_value_changed"]
-[connection signal="value_changed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/LayoutGridContainer/RowsSpinBox" to="." method="_on_rows_spin_box_value_changed"]
-[connection signal="value_changed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer/RegionWidthSpinBox" to="." method="_on_region_width_spin_box_value_changed"]
-[connection signal="value_changed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/RegionGridContainer/RegionHeightSpinBox" to="." method="_on_region_height_spin_box_value_changed"]
-[connection signal="color_changed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/BackgroundColorPickerButton" to="." method="_on_background_color_picker_button_color_changed"]
-[connection signal="value_changed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/GradientDensitySpinBox" to="." method="_on_gradient_density_spin_box_value_changed"]
-[connection signal="item_selected" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/PresetOptionButton" to="." method="_on_preset_option_button_item_selected"]
-[connection signal="value_changed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/ScrollContainer/GridContainer/ColorsCountSpinBox" to="." method="_on_colors_count_spin_box_value_changed"]
-[connection signal="canceled" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/HBoxContainer/FileDialog" to="." method="_on_file_dialog_canceled"]
-[connection signal="file_selected" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/HBoxContainer/FileDialog" to="." method="_on_file_dialog_file_selected"]
-[connection signal="pressed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/HBoxContainer/UpdateButton" to="." method="_on_update_button_pressed"]
-[connection signal="pressed" from="MarginContainer/HSplitContainer/SettingsPanel/HBoxContainer/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
-[connection signal="value_changed" from="MarginContainer/HSplitContainer/PreviewPanel/VBoxContainer/HBoxContainer/HBoxContainer2/ZoomSlider" to="." method="_on_zoom_slider_value_changed"]
+[connection signal="index_pressed" from="VBoxContainer/MenuContainer/MenuBar/PopupMenu" to="." method="_on_popup_menu_index_pressed"]
+[connection signal="pressed" from="VBoxContainer/MenuContainer/MenuBar/PopupPanel/VBoxContainer/LicenseCloseButton" to="." method="_on_license_close_button_pressed"]
+[connection signal="value_changed" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/LayoutGridContainer/ColumnsSpinBox" to="." method="_on_columns_spin_box_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/LayoutGridContainer/RowsSpinBox" to="." method="_on_rows_spin_box_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/RegionGridContainer/RegionWidthSpinBox" to="." method="_on_region_width_spin_box_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/LayoutGridContainer/RegionGridContainer/RegionHeightSpinBox" to="." method="_on_region_height_spin_box_value_changed"]
+[connection signal="item_selected" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/GradientGridContainer/GradientModeOptionButton" to="." method="_on_gradient_mode_option_button_item_selected"]
+[connection signal="value_changed" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/GradientGridContainer/GradientFactorSpinBox" to="." method="_on_gradient_factor_spin_box_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/GradientGridContainer/GradientQuantsSpinBox" to="." method="_on_gradient_quants_spin_box_value_changed"]
+[connection signal="color_changed" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/ColorsGridContainer/BackgroundColorPickerButton" to="." method="_on_background_color_picker_button_color_changed"]
+[connection signal="item_selected" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/ColorsGridContainer/PresetOptionButton" to="." method="_on_preset_option_button_item_selected"]
+[connection signal="value_changed" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/ScrollContainer/VBoxContainer/ColorsGridContainer/ColorsCountSpinBox" to="." method="_on_colors_count_spin_box_value_changed"]
+[connection signal="canceled" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/HBoxContainer/FileDialog" to="." method="_on_file_dialog_canceled"]
+[connection signal="file_selected" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/HBoxContainer/FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/HBoxContainer/UpdateButton" to="." method="_on_update_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/SettingsPanel/MarginContainer/HBoxContainer/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="value_changed" from="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2/ZoomSlider" to="." method="_on_zoom_slider_value_changed"]
