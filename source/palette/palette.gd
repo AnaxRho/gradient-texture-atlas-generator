@@ -25,4 +25,14 @@ func get_colors() -> Array[Color]:
 
 func size() -> int:
 	return _colors.size()
+
+func as_text() -> String:
+	var text: String = "Palette: "
+	var i: int = 0
+	for c in _colors:
+		text += '%s' % c.to_html()
+		if i < _colors.size() - 1:
+			text += ', '
+		i += 1
+	return text
 #endregion

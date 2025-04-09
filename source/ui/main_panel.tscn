@@ -1,15 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://dpup5exubfs6b"]
+[gd_scene load_steps=14 format=3 uid="uid://dpup5exubfs6b"]
 
 [ext_resource type="Script" uid="uid://0oj4td5mmn1c" path="res://ui/main_panel.gd" id="1_3tv7d"]
 [ext_resource type="Resource" uid="uid://bp61xj7ewfg10" path="res://palette/presets/expanded.tres" id="2_go3ok"]
 [ext_resource type="Script" uid="uid://v50chr7rdgqp" path="res://palette/gradient_texture_atlas.gd" id="3_qg3oi"]
-[ext_resource type="Texture2D" uid="uid://g7uymto0lb4w" path="res://ui/icons/door.png" id="4_614tt"]
-[ext_resource type="Texture2D" uid="uid://bw584rf0v381q" path="res://ui/icons/information.png" id="4_go3ok"]
-[ext_resource type="Texture2D" uid="uid://cscyw6c6r0tac" path="res://ui/icons/gear.png" id="4_k73qj"]
-[ext_resource type="Texture2D" uid="uid://dto15hwhklavq" path="res://ui/icons/checkmark.png" id="4_umdju"]
-[ext_resource type="Texture2D" uid="uid://4it6aymwxexm" path="res://ui/icons/save.png" id="5_k73qj"]
-[ext_resource type="Texture2D" uid="uid://bg4dswdot1vy0" path="res://ui/icons/tablet.png" id="7_0d81f"]
-[ext_resource type="Texture2D" uid="uid://ct27fbupq7fb8" path="res://ui/icons/zoom.png" id="7_2vneh"]
+[ext_resource type="Texture2D" uid="uid://g7uymto0lb4w" path="res://icons/door.png" id="4_614tt"]
+[ext_resource type="Texture2D" uid="uid://bw584rf0v381q" path="res://icons/information.png" id="4_go3ok"]
+[ext_resource type="Texture2D" uid="uid://cscyw6c6r0tac" path="res://icons/gear.png" id="4_k73qj"]
+[ext_resource type="Texture2D" uid="uid://dto15hwhklavq" path="res://icons/checkmark.png" id="4_umdju"]
+[ext_resource type="Texture2D" uid="uid://4it6aymwxexm" path="res://icons/save.png" id="5_k73qj"]
+[ext_resource type="Texture2D" uid="uid://bg4dswdot1vy0" path="res://icons/tablet.png" id="7_0d81f"]
+[ext_resource type="Texture2D" uid="uid://ct27fbupq7fb8" path="res://icons/zoom.png" id="7_2vneh"]
+[ext_resource type="Texture2D" uid="uid://bwe1da2w4sh5s" path="res://icon_32.png" id="10_6vrx2"]
 
 [sub_resource type="Resource" id="Resource_k73qj"]
 script = ExtResource("3_qg3oi")
@@ -495,7 +496,7 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 texture_filter = 1
 layout_mode = 2
-stretch_mode = 2
+texture = ExtResource("10_6vrx2")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2

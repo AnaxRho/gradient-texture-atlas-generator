@@ -81,13 +81,15 @@ func _ready() -> void:
 
 	background_color_picker_button.color = atlas.background_color
 
+	texture_rect.texture = null
 	_update_texture_size()
 
 	atlas.palette = PRESET_OPTIONS.values()[preset_option_button.selected]
-	
+
 	if atlas.palette != null:
+		Logger.debug(atlas.palette.as_text())
+		colors_count_spin_box.value = int(atlas.palette.size())
 		_update_colors_area(atlas.palette.size())
-		gradient_quants_spin_box.value = int(atlas.palette.size())
 
 func _add_gradient_mode_options() -> void:
 	gradient_mode_option_button.clear()
@@ -122,8 +124,9 @@ func _update_texture() -> void:
 	if atlas != null:
 		atlas.generate()
 		texture_rect.texture = atlas.get_texture()
-		texture_rect.scale.x = zoom_slider.value
-		texture_rect.scale.y = zoom_slider.value
+		# wait single frame
+		await get_tree().process_frame
+		_apply_zoom(zoom_slider.value)
 
 func _save_texture(path: String) -> void:
 	Logger.info('%s' % path)
@@ -131,6 +134,11 @@ func _save_texture(path: String) -> void:
 
 func _update_texture_size() -> void:
 	texture_size_edit.text = '%.0v' % atlas.get_texture_size()
+
+func _apply_zoom(value: float) -> void:
+	texture_rect.scale.x = value
+	texture_rect.scale.y = value
+	Logger.debug('scale: %v' % texture_rect.scale)
 #endregion
 
 #region Public methods
@@ -180,8 +188,7 @@ func _on_preset_option_button_item_selected(index: int) -> void:
 
 func _on_zoom_slider_value_changed(value: float) -> void:
 	zoom_value_label.text = "%0.2f" % value
-	texture_rect.scale.x = value
-	texture_rect.scale.y = value
+	_apply_zoom(value)
 
 func _on_update_button_pressed() -> void:
 	_update_texture()

@@ -1,6 +1,12 @@
 # Gradient Texture Atlas Generator
 
-Tool application for gradient texture atlas images generation.
+Tool application for generating atlas images for low poly model texturing with gradient textures.
+
+Quick example of application:
+
+![Example](docs/example.jpg)
+
+[Article about technique](https://itch.io/blog/797457/optimization-of-3d-texturing-for-mobile-games-definition-of-the-gradient-texturing-process-and-analysis-of-its-efficiency-and-performance-in-engine)
 
 Main Window:
 
