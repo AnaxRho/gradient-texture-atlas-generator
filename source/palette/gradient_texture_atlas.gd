@@ -88,6 +88,10 @@ func _generate_image() -> Image:
 #endregion
 
 #region Public methods
+func set_color(idx: int, color: Color) -> void:
+	if palette != null:
+		palette._colors[idx] = color
+
 func get_texture_size() -> Vector2i:
 	return Vector2i(layout.x * region_size.x, layout.y * region_size.y)
 

@@ -19,10 +19,10 @@ extends Control
 
 #region Static variables
 static var PRESET_OPTIONS: Dictionary[String, Palette] = {
-	"": null,
 	"Extended": preload("res://palette/presets/expanded.tres"),
 	"Pastel": preload("res://palette/presets/pastel.tres"),
 	"Noir": preload("res://palette/presets/noir.tres"),
+	"": null,
 }
 #endregion
 
@@ -41,7 +41,7 @@ static var PRESET_OPTIONS: Dictionary[String, Palette] = {
 @onready var background_color_picker_button: ColorPickerButton = %BackgroundColorPickerButton
 @onready var colors_count_spin_box: SpinBox = %ColorsCountSpinBox
 
-@onready var colors_container: VBoxContainer = %ColorsContainer
+@onready var colors_container: GridContainer = %ColorsContainer
 
 @onready var texture_size_edit: LineEdit = %TextureSizeEdit
 @onready var texture_rect: TextureRect = %TextureRect
@@ -69,6 +69,7 @@ func _ready() -> void:
 	license_text.text = Engine.get_license_text()
 
 	columns_spin_box.value = atlas.layout.x
+	colors_container.columns = atlas.layout.x
 	rows_spin_box.value = atlas.layout.y
 
 	region_width_spin_box.value = atlas.region_size.x
@@ -82,6 +83,8 @@ func _ready() -> void:
 
 	_update_texture_size()
 
+	atlas.palette = PRESET_OPTIONS.values()[preset_option_button.selected]
+	
 	if atlas.palette != null:
 		_update_colors_area(atlas.palette.size())
 		gradient_quants_spin_box.value = int(atlas.palette.size())
@@ -99,7 +102,8 @@ func _add_preset_options() -> void:
 func _add_color_picker(idx: int) -> void:
 	var picker: ColorPickerButton = ColorPickerButton.new()
 	picker.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-	picker.custom_minimum_size = Vector2i(100, 20)
+	picker.custom_minimum_size = Vector2i(48, 27)
+	picker.color_changed.connect(on_palette_color_picker_color_changed.bind(idx))
 	var palette_colors: Array[Color] = atlas.palette.get_colors()
 	if palette_colors.size() > idx:
 		picker.color = palette_colors[idx]
@@ -133,8 +137,12 @@ func _update_texture_size() -> void:
 #endregion
 
 #region Signal handlers
+func on_palette_color_picker_color_changed(color: Color, idx: int) -> void:
+	atlas.palette.set_color(idx, color)
+
 func _on_columns_spin_box_value_changed(value: float) -> void:
 	atlas.layout.x = int(value)
+	colors_container.columns = atlas.layout.x
 	_update_texture_size()
 
 func _on_rows_spin_box_value_changed(value: float) -> void:

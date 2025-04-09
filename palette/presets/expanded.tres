@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="PalettePreset" load_steps=2 format=3 uid="uid://bp61xj7ewfg10"]
-
-[ext_resource type="Script" uid="uid://cehyn8t86ekay" path="res://palette/palette.gd" id="1_bgai4"]
-
-[resource]
-script = ExtResource("1_bgai4")
-_colors = Array[Color]([Color(0.901961, 0.223529, 0.27451, 1), Color(0.956863, 0.635294, 0.380392, 1), Color(1, 0.819608, 0.4, 1), Color(0.0235294, 0.839216, 0.627451, 1), Color(0.0666667, 0.541176, 0.698039, 1), Color(0.027451, 0.231373, 0.298039, 1), Color(0.447059, 0.0352941, 0.717647, 1)])
-metadata/_custom_type_script = "uid://cehyn8t86ekay"
