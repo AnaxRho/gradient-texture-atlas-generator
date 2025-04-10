@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dpup5exubfs6b"]
+[gd_scene load_steps=13 format=3 uid="uid://dpup5exubfs6b"]
 
 [ext_resource type="Script" uid="uid://0oj4td5mmn1c" path="res://ui/main_panel.gd" id="1_3tv7d"]
 [ext_resource type="Resource" uid="uid://bp61xj7ewfg10" path="res://palette/presets/expanded.tres" id="2_go3ok"]
@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://4it6aymwxexm" path="res://icons/save.png" id="5_k73qj"]
 [ext_resource type="Texture2D" uid="uid://bg4dswdot1vy0" path="res://icons/tablet.png" id="7_0d81f"]
 [ext_resource type="Texture2D" uid="uid://ct27fbupq7fb8" path="res://icons/zoom.png" id="7_2vneh"]
-[ext_resource type="Texture2D" uid="uid://bwe1da2w4sh5s" path="res://icon_32.png" id="10_6vrx2"]
 
 [sub_resource type="Resource" id="Resource_k73qj"]
 script = ExtResource("3_qg3oi")
@@ -409,7 +408,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 max_value = 256.0
-value = 1.0
+value = 8.0
 rounded = true
 alignment = 2
 
@@ -496,7 +495,6 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 texture_filter = 1
 layout_mode = 2
-texture = ExtResource("10_6vrx2")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MainPanelContainer/VBoxContainer/HSplitContainer/PreviewPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
